@@ -5,10 +5,19 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     openssh-server \
     python3 \
-    ansible \
     git \
     wget \
     && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update \
+    && apt-get install -y \
+    python-pip \
+    python-dev \
+    build-essential
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade pip \
+    && pip install --upgrade ansible
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
