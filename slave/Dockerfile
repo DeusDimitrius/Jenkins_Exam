@@ -41,10 +41,10 @@ RUN \
    && apt-get update \
    && apt-get -y install docker-ce  
 
-# Not works
+# Not works:
 # VOLUME /var/run/docker.sock:/var/run/docker.sock
 
-# Install user jenkins
+# Install user jenkins:
 ARG user=jenkins
 ARG group=jenkins
 ARG uid=1000
@@ -61,7 +61,7 @@ RUN \
    && usermod -a -G docker jenkins \
    && usermod -a -G root jenkins
 
-# setup SSH server
+# Setup SSH server:
 RUN sed -i /etc/ssh/sshd_config \
         -e 's/#PermitRootLogin.*/PermitRootLogin no/' \
         -e 's/#RSAAuthentication.*/RSAAuthentication yes/'  \
@@ -70,7 +70,7 @@ RUN sed -i /etc/ssh/sshd_config \
         -e 's/#LogLevel.*/LogLevel INFO/' && \
 mkdir /var/run/sshd
 
-# Add public key for Jenkins login
+# Add public key for Jenkins login:
 RUN \
     mkdir /home/jenkins/.ssh \
    && echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKQX5SnDfLe7gxoK5oNNUDOeFaeGwLkE9Oek3QPfJlT3yUIOkVd4HWKtD+DSFV/8uZeO77I7KFkfh/SjVibSIZ7+Fa4qRqUEwPyd6K5iwSdlvRqASxbriWR/Kb+1Q5qk6+hljJE6G9z24QpQmh0+LB4PWJ+pA1E5icR1csJMgugsdGNMJvfs9H1KhYTULDME95RBrZ8JYxZd1Eb0GmEm7AopscXCjCDSgvNVoQmaOlQ0uPFuk3FVfCNEmNTl646TtjNBv02MfSEqjELjIQcu+okKysPkWkZLGgxCjncaQzAt515pUPvadJy81zrDEOQcFJRGNU1y1uFDc7ZiX5UCnX user@MacBook-Air-User.local' >> /home/jenkins/.ssh/authorized_keys \
@@ -80,10 +80,10 @@ VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
 
 WORKDIR "${JENKINS_AGENT_HOME}"
 
-# Expose the standard SSH port
+# Expose the standard SSH port:
 EXPOSE 22
 
-# Run SSHD
+# Run SSHD:
 ENTRYPOINT exec /usr/sbin/sshd -D -e "${@}"
 
 
