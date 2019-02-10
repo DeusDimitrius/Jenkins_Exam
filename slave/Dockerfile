@@ -23,10 +23,10 @@ RUN \
    && rm -rf /var/lib/apt/lists/* \
    && pip install --upgrade setuptools
    
-# Install Ansible
+# Install Ansible:
 RUN pip install --upgrade ansible
 
-# Install docker:
+# Install Docker:
 RUN \
     apt-get update \
    && apt-get install -y \
